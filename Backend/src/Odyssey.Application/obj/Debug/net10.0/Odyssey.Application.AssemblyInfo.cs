@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Odyssey.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d4d6e9efce780090a43f818b63981f1c7ba3be7a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4e0050e16c8a9b47bf3433492d126b5212fdb329")]
 [assembly: System.Reflection.AssemblyProductAttribute("Odyssey.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Odyssey.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
