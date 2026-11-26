@@ -1,6 +1,6 @@
 namespace Odyssey.Domain.Users.Owners;
 
-public class Owner : User
+public class Owner : Client
 {
     
 }

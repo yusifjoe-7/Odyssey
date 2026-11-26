@@ -9,6 +9,6 @@ public class ApprovedAddHostRequest
     public int HostId { get; set; }
     public Host host { get; set; }
 
-    public int AdminId { get; set; }  // The Admin Who Approved
-    public Admin admin { get; set; }
+    public int ApprovedAdminId { get; set; }  // The Admin Who Approved
+    public Admin ApprovedAdmin { get; set; }
 }
