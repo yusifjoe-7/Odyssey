@@ -1,0 +1,16 @@
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Application/bin/Debug/net10.0/Odyssey.Application.deps.json
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Application/bin/Debug/net10.0/Odyssey.Application.dll
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Application/bin/Debug/net10.0/Odyssey.Application.pdb
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Application/bin/Debug/net10.0/Odyssey.Domain.dll
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Application/bin/Debug/net10.0/Odyssey.Domain.pdb
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Application/obj/Debug/net10.0/Odyssey.Application.csproj.AssemblyReference.cache
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Application/obj/Debug/net10.0/Odyssey.Application.GeneratedMSBuildEditorConfig.editorconfig
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Application/obj/Debug/net10.0/Odyssey.Application.AssemblyInfoInputs.cache
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Application/obj/Debug/net10.0/Odyssey.Application.AssemblyInfo.cs
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Application/obj/Debug/net10.0/Odyssey.Application.csproj.CoreCompileInputs.cache
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Application/obj/Debug/net10.0/Odyssey.Application.sourcelink.json
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Application/obj/Debug/net10.0/Odyssey..29C96590.Up2Date
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Application/obj/Debug/net10.0/Odyssey.Application.dll
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Application/obj/Debug/net10.0/refint/Odyssey.Application.dll
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Application/obj/Debug/net10.0/Odyssey.Application.pdb
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Application/obj/Debug/net10.0/ref/Odyssey.Application.dll

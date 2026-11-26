@@ -1,0 +1,12 @@
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Domain/bin/Debug/net10.0/Odyssey.Domain.deps.json
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Domain/bin/Debug/net10.0/Odyssey.Domain.dll
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Domain/bin/Debug/net10.0/Odyssey.Domain.pdb
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Domain/obj/Debug/net10.0/Odyssey.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Domain/obj/Debug/net10.0/Odyssey.Domain.AssemblyInfoInputs.cache
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Domain/obj/Debug/net10.0/Odyssey.Domain.AssemblyInfo.cs
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Domain/obj/Debug/net10.0/Odyssey.Domain.csproj.CoreCompileInputs.cache
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Domain/obj/Debug/net10.0/Odyssey.Domain.sourcelink.json
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Domain/obj/Debug/net10.0/Odyssey.Domain.dll
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Domain/obj/Debug/net10.0/refint/Odyssey.Domain.dll
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Domain/obj/Debug/net10.0/Odyssey.Domain.pdb
+/home/joe/Data/Odyssey/Backend/src/Odyssey.Domain/obj/Debug/net10.0/ref/Odyssey.Domain.dll
