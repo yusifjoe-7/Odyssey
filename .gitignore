@@ -3,3 +3,9 @@
 **/bin/
 **/obj/
 
+# Secrets / environment
+.env
+*.env
+appsettings.Development.json
+
+
