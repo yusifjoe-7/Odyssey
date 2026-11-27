@@ -3,6 +3,9 @@ namespace Odyssey.Application;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Odyssey.Application.Behavior;
+using Odyssey.Application.Users.Admins;
+using Odyssey.Application.Users.Customers;
+using Odyssey.Application.Users.Owners;
 
 public static class DependencyInjection
 {
@@ -18,6 +21,10 @@ public static class DependencyInjection
 
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
         
+
+        services.AddScoped<CustomerDbRegisteringCommit>();
+        services.AddScoped<OwnerDbRegisteringCommit>();
+        services.AddScoped<AdminDbRegisteringCommit>();
 
         return services;
     }

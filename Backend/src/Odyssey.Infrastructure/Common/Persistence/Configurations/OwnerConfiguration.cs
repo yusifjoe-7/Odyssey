@@ -17,7 +17,7 @@ public class OwnerConfiguration : IEntityTypeConfiguration<Owner>
         builder.Property(o => o.Name).IsRequired().HasMaxLength(200);
         builder.Property(o => o.Email).IsRequired().HasMaxLength(300);
         builder.Property(o => o.HashedPassword).IsRequired().HasMaxLength(1000);
-        builder.Property(o => o.Role).IsRequired();
+        builder.Property(o => o.role).IsRequired();
         builder.Property(o => o.CreatedAt).IsRequired();
 
         builder.HasIndex(o => o.UserName).IsUnique();

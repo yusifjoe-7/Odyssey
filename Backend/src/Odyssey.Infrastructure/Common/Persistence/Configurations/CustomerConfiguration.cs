@@ -17,7 +17,7 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
         builder.Property(c => c.Name).IsRequired().HasMaxLength(200);
         builder.Property(c => c.Email).IsRequired().HasMaxLength(300);
         builder.Property(c => c.HashedPassword).IsRequired().HasMaxLength(1000);
-        builder.Property(c => c.Role).IsRequired();
+        builder.Property(c => c.role).IsRequired();
         builder.Property(c => c.CreatedAt).IsRequired();
 
         builder.HasIndex(c => c.UserName).IsUnique();

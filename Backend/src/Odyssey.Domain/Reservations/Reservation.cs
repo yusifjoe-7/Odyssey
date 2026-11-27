@@ -18,6 +18,8 @@ public class Reservation
     public int HostId { get; set; }
     public Host host { get; set; }
 
+    public decimal TotalPrice { get; set; }
+
     public DateOnly From { get; set; }
     public DateOnly To { get; set; }
 }

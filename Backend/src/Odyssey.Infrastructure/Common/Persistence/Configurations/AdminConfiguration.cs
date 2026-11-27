@@ -16,7 +16,7 @@ public class AdminConfiguration : IEntityTypeConfiguration<Admin>
         builder.Property(a => a.Name).IsRequired().HasMaxLength(200);
         builder.Property(a => a.Email).IsRequired().HasMaxLength(300);
         builder.Property(a => a.HashedPassword).IsRequired().HasMaxLength(1000);
-        builder.Property(a => a.Role).IsRequired();
+        builder.Property(a => a.role).IsRequired();
         builder.Property(a => a.CreatedAt).IsRequired();
     }
 }

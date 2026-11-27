@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Odyssey.Application.Exceptons;
 using Odyssey.Domain.Exceptions;
 
 namespace Odyssey.Api.Middleware;
@@ -25,6 +26,8 @@ public class GlobalExceptionHandler : IExceptionHandler
         {
             NotFoundException => (StatusCodes.Status404NotFound, "Not Found"),
             ValidationException => (StatusCodes.Status400BadRequest, "Validation Error"),
+            InvalidRoleException => (StatusCodes.Status409Conflict, "Roule Error"),
+            UnkownRoleException => (StatusCodes.Status400BadRequest, "Unkown Role"),
             _ => (StatusCodes.Status500InternalServerError, "Internal Server Error")
         };
 

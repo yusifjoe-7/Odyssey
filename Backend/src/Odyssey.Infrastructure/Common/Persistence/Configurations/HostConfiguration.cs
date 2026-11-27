@@ -21,5 +21,12 @@ public class HostConfiguration : IEntityTypeConfiguration<Host>
             .HasForeignKey(h => h.OwnerUserName)
             .HasPrincipalKey(o => o.UserName)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Property(h => h.PricePerNight)
+            .HasColumnName("decimal(8, 1)") // using limeted space will only be a problem if i added defrint Currencies
+            .IsRequired();                  //so i will not
+
+        builder.HasIndex(h => h.PricePerNight);
+            
     }
 }

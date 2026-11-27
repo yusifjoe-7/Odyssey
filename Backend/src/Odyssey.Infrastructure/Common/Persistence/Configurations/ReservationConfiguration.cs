@@ -22,6 +22,10 @@ public class ReservationConfiguration : IEntityTypeConfiguration<Reservation>
         builder.Property(r => r.From).IsRequired();
         builder.Property(r => r.To).IsRequired();
 
+        builder.Property(r => r.TotalPrice)
+            .HasColumnName("decimal(10, 1)")
+            .IsRequired();
+
         builder.HasOne(r => r.Owner)
             .WithMany()
             .HasForeignKey(r => r.OwnerUserName)
