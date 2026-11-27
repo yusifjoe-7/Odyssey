@@ -3,15 +3,17 @@ using Odyssey.Application.Users.Registering;
 using Odyssey.Domain.Users;
 using Odyssey.Domain.Users.Customers;
 
-namespace Odyssey.Application.Users.Customers;
+namespace Odyssey.Application.Users.Customers.Registering;
 
-public class CustomerDbRegisteringCommit(ICustomerDb context) : IDbRegisteringCommit
+
+public class CustomerDbRegisteringCommit(ICustomerDb context, CheckNameAndEmailCustomer Checker) : IDbRegisteringCommit
 {
     public async Task<int> Commit(User user, CancellationToken cancellationToken)
     {
+        await Checker.Check(user);
 
-        user.role = Role.Customer;
-        
+        user.role = Role.Owner;
+
         context.Customers.Add((Customer)user);
 
         await context.SaveChangesAsync(cancellationToken);

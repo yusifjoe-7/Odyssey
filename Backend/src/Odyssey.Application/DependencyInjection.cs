@@ -1,11 +1,12 @@
+
+using Odyssey.Application.Users.Admins.Registering;
+using Odyssey.Application.Users.Owners.Registering;
+using Odyssey.Application.Users.Customers.Registering;
 namespace Odyssey.Application;
 
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Odyssey.Application.Behavior;
-using Odyssey.Application.Users.Admins;
-using Odyssey.Application.Users.Customers;
-using Odyssey.Application.Users.Owners;
 
 public static class DependencyInjection
 {
@@ -25,6 +26,10 @@ public static class DependencyInjection
         services.AddScoped<CustomerDbRegisteringCommit>();
         services.AddScoped<OwnerDbRegisteringCommit>();
         services.AddScoped<AdminDbRegisteringCommit>();
+        
+        services.AddScoped<CheckNameAndEmailCustomer>();
+        services.AddScoped<CheckNameAndEmailOwner>();
+        services.AddScoped<CheckNameAndEmailAdmin>();
 
         return services;
     }

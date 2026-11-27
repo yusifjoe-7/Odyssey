@@ -1,11 +1,11 @@
 using System.Diagnostics;
 using MediatR;
 using Odyssey.Application.Exceptons;
-using Odyssey.Application.Users.Admins;
-using Odyssey.Application.Users.Customers;
-using Odyssey.Application.Users.Owners;
 using Odyssey.Domain.Common.Security;
 using Odyssey.Domain.Users;
+using Odyssey.Application.Users.Admins.Registering;
+using Odyssey.Application.Users.Owners.Registering;
+using Odyssey.Application.Users.Customers.Registering;
 
 namespace Odyssey.Application.Users.Registering;
 
