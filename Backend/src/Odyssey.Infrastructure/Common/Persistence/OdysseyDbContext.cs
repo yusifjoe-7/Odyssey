@@ -30,7 +30,8 @@ public class OdysseyDbContext : DbContext,
     IAdminDb,
     ICreateAdminRequestDb,
     ICustomerDb,
-    IOwnerDb
+    IOwnerDb,
+    IRefreshTokenDb
 {
     public OdysseyDbContext(DbContextOptions<OdysseyDbContext> options) : base(options) { }
 
@@ -55,6 +56,18 @@ public class OdysseyDbContext : DbContext,
 
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<Owner> Owners => Set<Owner>();
+
+    public async Task<User?> FindUserAsync(int userId, CancellationToken cancellationToken = default)
+    {
+        // User hierarchy uses TPC; no single Users table, so search each concrete table.
+        User? user = await Admins.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
+        if (user is not null) return user;
+
+        user = await Customers.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
+        if (user is not null) return user;
+
+        return await Owners.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
