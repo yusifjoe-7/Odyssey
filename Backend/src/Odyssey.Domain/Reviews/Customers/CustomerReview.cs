@@ -4,6 +4,6 @@ namespace Odyssey.Domain.Reviews.Customers;
 
 public class CustomerReview : Review
 {
-    public int ToId { get; set; }
-    public Customer ToUser { get; set; }
+    public string ToCustomerUserName { get; set; }
+    public Customer ToCustomer { get; set; }
 }

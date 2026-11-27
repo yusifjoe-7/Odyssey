@@ -7,10 +7,10 @@ public class Issue
 {
     public int Id { get; set;}
 
-    public int ClientId { get; set; }
+    public string ClientUserName { get; set; }
     public Client clinet { get; set; }
     
-    public int? AssignedAdminId { get; set; }
+    public string? AssignedAdminUserName { get; set; }
     public Admin? AssignedAdmin { get; set; }
 
     public IssueStatus issueStatus {get; set;} = IssueStatus.Open;

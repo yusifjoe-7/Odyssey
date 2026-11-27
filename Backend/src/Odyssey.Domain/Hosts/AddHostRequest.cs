@@ -7,8 +7,8 @@ public class AddHostRequest
 {
     public int Id { get; set; }
     
-    public int OwnerId { get; set; }
-    public Owner owner { get; set; }
+    public string OwnerUserName { get; set; }
+    public Owner Owner { get; set; }
 
     public string Description { get; set; }
 

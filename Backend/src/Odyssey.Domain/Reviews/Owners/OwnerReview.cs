@@ -4,6 +4,6 @@ namespace Odyssey.Domain.Reviews.Owners;
 
 public class OwnerReview : Review
 {
-    public int ToId { get; set; }
+    public string ToOwnerUserName { get; set; }
     public Owner ToOwner { get; set; }
 }

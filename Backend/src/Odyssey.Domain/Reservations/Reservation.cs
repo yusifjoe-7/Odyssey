@@ -6,13 +6,14 @@ namespace Odyssey.Domain.Reservations;
 
 public class Reservation
 {
-    public int Id { get; set; }
+    // this UUID becuase i think the user will need it in case somthing went wrong, to make a report 
+    public Guid Id { get; set; }
     
-    public int OwnerId { get; set; }
-    public Owner owner { get; set; }
+    public string OwnerUserName { get; set; }
+    public Owner Owner { get; set; }
 
-    public int CustomerId { get; set; }
-    public Customer customer{ get; set; }
+    public string CustomerUserName { get; set; }
+    public Customer customer { get; set; }
     
     public int HostId { get; set; }
     public Host host { get; set; }
