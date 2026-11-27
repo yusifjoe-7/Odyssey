@@ -1,3 +1,5 @@
+using System;
+using Odyssey.Domain.Reservations;
 using Odyssey.Domain.Users.Customers;
 using Odyssey.Domain.Users.Owners;
 
@@ -13,6 +15,6 @@ public class Conversation
     public int OwnerId { get; set; }
     public Owner owner { get; set; }
 
-    public int ReservationId { get; set; }
-    // add reservation object 
+    public Guid ReservationId { get; set; }
+    public Reservation Reservation { get; set; }
 }
