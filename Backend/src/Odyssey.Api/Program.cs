@@ -8,14 +8,16 @@ using Odyssey.Infrastructure.Common.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Odyssey.Api.Middleware;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
 builder.Services.AddOpenApi();
 
 builder.Services.AddApplication();
@@ -75,6 +77,8 @@ if (app.Environment.IsDevelopment())
 }
 
 await app.Services.ApplyMigrationsAsync();
+
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 
