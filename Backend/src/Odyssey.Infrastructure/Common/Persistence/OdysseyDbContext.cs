@@ -49,6 +49,7 @@ public class OdysseyDbContext : DbContext,
     public DbSet<OwnerReview> OwnerReviews => Set<OwnerReview>();
 
     public DbSet<Issue> Issues => Set<Issue>();
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     public DbSet<Admin> Admins => Set<Admin>();
     public DbSet<CreateAdminRequest> CreateAdminRequests => Set<CreateAdminRequest>();
