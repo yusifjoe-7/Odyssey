@@ -9,12 +9,17 @@ public class CreateAdminRequestConfiguration : IEntityTypeConfiguration<CreateAd
     public void Configure(EntityTypeBuilder<CreateAdminRequest> builder)
     {
         builder.ToTable("CreateAdminRequests");
-        builder.HasKey(c => c.Id);
-        builder.Property(c => c.Id).ValueGeneratedOnAdd();
+         builder.HasKey(a => a.Id);
+        builder.Property(a => a.Id).ValueGeneratedOnAdd();
+
+        // The User base type is excluded from the model, so map inherited properties explicitly.
+        builder.Property(a => a.Name).IsRequired().HasMaxLength(200);
+        builder.Property(a => a.Email).IsRequired().HasMaxLength(300);
+        builder.Property(a => a.HashedPassword).IsRequired().HasMaxLength(1000);
+        builder.Property(a => a.role).IsRequired();
+        builder.Property(a => a.CreatedAt).IsRequired();
 
         builder.Property(c => c.Situation).IsRequired();
 
-        // User is excluded from the model.
-        builder.Ignore(c => c.user);
     }
 }

@@ -61,7 +61,6 @@ builder.Services.AddScoped<IOwnerReviewDb>(sp => sp.GetRequiredService<OdysseyDb
 builder.Services.AddScoped<IIssueDb>(sp => sp.GetRequiredService<OdysseyDbContext>());
 builder.Services.AddScoped<IAdminDb>(sp => sp.GetRequiredService<OdysseyDbContext>());
 builder.Services.AddScoped<ICreateAdminRequestDb>(sp => sp.GetRequiredService<OdysseyDbContext>());
-builder.Services.AddScoped<ICreateAdminRequestApprovedDb>(sp => sp.GetRequiredService<OdysseyDbContext>());
 builder.Services.AddScoped<ICustomerDb>(sp => sp.GetRequiredService<OdysseyDbContext>());
 builder.Services.AddScoped<IOwnerDb>(sp => sp.GetRequiredService<OdysseyDbContext>());
 

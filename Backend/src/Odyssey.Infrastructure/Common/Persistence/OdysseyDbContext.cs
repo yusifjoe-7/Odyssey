@@ -29,7 +29,6 @@ public class OdysseyDbContext : DbContext,
     IIssueDb,
     IAdminDb,
     ICreateAdminRequestDb,
-    ICreateAdminRequestApprovedDb,
     ICustomerDb,
     IOwnerDb
 {
@@ -53,7 +52,6 @@ public class OdysseyDbContext : DbContext,
 
     public DbSet<Admin> Admins => Set<Admin>();
     public DbSet<CreateAdminRequest> CreateAdminRequests => Set<CreateAdminRequest>();
-    public DbSet<CreateAdminRequestApproved> CreateAdminRequestsApproved => Set<CreateAdminRequestApproved>();
 
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<Owner> Owners => Set<Owner>();

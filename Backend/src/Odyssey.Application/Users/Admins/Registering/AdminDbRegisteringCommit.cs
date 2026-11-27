@@ -6,15 +6,17 @@ using Odyssey.Application.Users.Admins.Registering;
 
 namespace Odyssey.Application.Users.Admins.Registering;
 
-public class AdminDbRegisteringCommit(IAdminDb context, CheckNameAndEmailAdmin Checker) : IDbRegisteringCommit
+public class AdminDbRegisteringCommit(ICreateAdminRequestDb context, CheckNameAndEmailAdmin Checker1, CheckNameAndEmailAdminRequested Checker2) : IDbRegisteringCommit
 {
     public async Task<int> Commit(User user, CancellationToken cancellationToken)
     {
-        await Checker.Check(user);
+        await Checker1.Check(user);
+        await Checker2.Check(user);
 
         user.role = Role.Owner;
+        
 
-        context.Admins.Add((Admin)user);
+        context.CreateAdminRequests.Add((CreateAdminRequest)user);
 
         await context.SaveChangesAsync(cancellationToken);
         return user.Id;

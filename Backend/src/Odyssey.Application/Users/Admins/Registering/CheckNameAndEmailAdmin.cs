@@ -1,5 +1,4 @@
 using Odyssey.Application.Common.Persistence.Interfaces;
-using Odyssey.Application.Exceptons;
 using Odyssey.Application.Users.Registering;
 using Odyssey.Domain.Users;
 
