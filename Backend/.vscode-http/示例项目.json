@@ -1,0 +1,46 @@
+{
+  "id": "proj-1",
+  "name": "示例项目",
+  "environments": [
+    {
+      "id": "env-1",
+      "name": "开发",
+      "baseUrl": "https://api.example.com"
+    }
+  ],
+  "currentEnvId": "env-1",
+  "children": [
+    {
+      "id": "coll-1",
+      "name": "用户相关",
+      "parentId": "proj-1",
+      "children": [
+        {
+          "id": "api-1",
+          "name": "获取用户列表",
+          "url": "https://api.example.com/users",
+          "method": "GET",
+          "parentId": "coll-1",
+          "instances": []
+        },
+        {
+          "id": "api-2",
+          "name": "创建用户",
+          "url": "https://api.example.com/users",
+          "method": "POST",
+          "parentId": "coll-1",
+          "requestBody": "{\"name\": \"\", \"email\": \"\"}",
+          "instances": []
+        }
+      ]
+    },
+    {
+      "id": "api-3",
+      "name": "健康检查",
+      "url": "https://api.example.com/health",
+      "method": "GET",
+      "parentId": "proj-1",
+      "instances": []
+    }
+  ]
+}
