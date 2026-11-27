@@ -6,5 +6,6 @@ namespace Odyssey.Domain.Users;
     public string Name { get; set; }
     public string Email { get; set; }
     public string HashedPassword { get; set; }
+    public Role Role { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }
