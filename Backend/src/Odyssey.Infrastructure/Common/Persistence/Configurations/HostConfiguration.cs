@@ -26,6 +26,8 @@ public class HostConfiguration : IEntityTypeConfiguration<Host>
             .HasColumnName("decimal(8, 1)") // using limeted space will only be a problem if i added defrint Currencies
             .IsRequired();                  //so i will not
 
+        builder.Property(h => h.MainImageKey).IsRequired().HasMaxLength(1000);
+
         builder.HasIndex(h => h.PricePerNight);
             
     }

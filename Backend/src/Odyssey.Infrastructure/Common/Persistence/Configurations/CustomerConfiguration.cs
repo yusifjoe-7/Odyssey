@@ -20,6 +20,9 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
         builder.Property(c => c.role).IsRequired();
         builder.Property(c => c.CreatedAt).IsRequired();
 
+        // Inherited from Client; nullable.
+        builder.Property(c => c.ImageKey).HasMaxLength(1000);
+
         builder.HasIndex(c => c.UserName).IsUnique();
     }
 }

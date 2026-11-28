@@ -15,5 +15,8 @@ public class Host
 
     public int PropertyArea { get; set; }
 
+    public string MainImageKey { get; set; }
+
+    public ICollection<HostImages> HostImages { get; set; } = new List<HostImages>();
 
 }

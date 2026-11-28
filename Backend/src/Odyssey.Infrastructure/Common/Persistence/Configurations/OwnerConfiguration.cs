@@ -20,6 +20,9 @@ public class OwnerConfiguration : IEntityTypeConfiguration<Owner>
         builder.Property(o => o.role).IsRequired();
         builder.Property(o => o.CreatedAt).IsRequired();
 
+        // Inherited from Client; nullable.
+        builder.Property(o => o.ImageKey).HasMaxLength(1000);
+
         builder.HasIndex(o => o.UserName).IsUnique();
     }
 }

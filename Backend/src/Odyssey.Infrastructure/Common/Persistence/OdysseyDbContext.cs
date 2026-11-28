@@ -31,7 +31,8 @@ public class OdysseyDbContext : DbContext,
     ICreateAdminRequestDb,
     ICustomerDb,
     IOwnerDb,
-    IRefreshTokenDb
+    IRefreshTokenDb,
+    IUserDb
 {
     public OdysseyDbContext(DbContextOptions<OdysseyDbContext> options) : base(options) { }
 
@@ -39,6 +40,7 @@ public class OdysseyDbContext : DbContext,
     public DbSet<Message> Messages => Set<Message>();
 
     public DbSet<Host> Hosts => Set<Host>();
+    public DbSet<HostImages> HostImages => Set<HostImages>();
     public DbSet<AddHostRequest> AddHostRequests => Set<AddHostRequest>();
     public DbSet<ApprovedAddHostRequest> ApprovedAddHostRequests => Set<ApprovedAddHostRequest>();
 
@@ -56,6 +58,18 @@ public class OdysseyDbContext : DbContext,
 
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<Owner> Owners => Set<Owner>();
+
+    public async Task<User?> FindUserByUserNameAsync(string userName, CancellationToken cancellationToken = default)
+    {
+        // User hierarchy uses TPC; no single Users table, so search each concrete table.
+        User? user = await Admins.FirstOrDefaultAsync(u => u.UserName == userName, cancellationToken);
+        if (user is not null) return user;
+
+        user = await Customers.FirstOrDefaultAsync(u => u.UserName == userName, cancellationToken);
+        if (user is not null) return user;
+
+        return await Owners.FirstOrDefaultAsync(u => u.UserName == userName, cancellationToken);
+    }
 
     public async Task<User?> FindUserAsync(int userId, CancellationToken cancellationToken = default)
     {

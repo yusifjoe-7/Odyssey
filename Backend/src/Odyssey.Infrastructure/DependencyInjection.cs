@@ -21,6 +21,8 @@ public static class DependencyInjection
 
         services.AddScoped<IRefreshTokenDb>(sp => sp.GetRequiredService<OdysseyDbContext>());
 
+        services.AddScoped<IUserDb>(sp => sp.GetRequiredService<OdysseyDbContext>());
+
         return services;
     }
 }
