@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace Odyssey.Application.Users.Registering;
 
@@ -8,5 +9,6 @@ public record RegisteringCommand(
             string UserName,
             string Email,
             string Password,
-            string Role
+            string Role,
+            IFormFile? Image = null
             ) : IRequest<int>;
