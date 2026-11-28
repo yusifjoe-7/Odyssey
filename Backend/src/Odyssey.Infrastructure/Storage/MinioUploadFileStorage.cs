@@ -32,4 +32,10 @@ public class MinioUploadFileStorage : IUploadFileStorage
 
         return objectName;
     }
+
+    public async Task<IEnumerable<string>> UploadManyAsync(IEnumerable<IFormFile> files, CancellationToken cancellationToken = default)
+    {
+        var uploads = files.Select(file => UploadAsync(file, cancellationToken));
+        return await Task.WhenAll(uploads);
+    }
 }

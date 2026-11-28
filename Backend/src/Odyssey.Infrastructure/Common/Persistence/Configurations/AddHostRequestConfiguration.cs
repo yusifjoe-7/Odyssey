@@ -22,5 +22,10 @@ public class AddHostRequestConfiguration : IEntityTypeConfiguration<AddHostReque
             .HasForeignKey(a => a.OwnerUserName)
             .HasPrincipalKey(o => o.UserName)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasMany(a => a.HostImages)
+            .WithOne()
+            .HasForeignKey("AddHostRequestId")
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

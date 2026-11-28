@@ -5,4 +5,6 @@ namespace Odyssey.Application.Common.Storage;
 public interface IUploadFileStorage
 {
     Task<string> UploadAsync(IFormFile file, CancellationToken cancellationToken = default);
+
+    Task<IEnumerable<string>> UploadManyAsync(IEnumerable<IFormFile> files, CancellationToken cancellationToken = default);
 }

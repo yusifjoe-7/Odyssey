@@ -53,7 +53,6 @@ builder.Services.AddScoped<IConversationDb>(sp => sp.GetRequiredService<OdysseyD
 builder.Services.AddScoped<IMessageDb>(sp => sp.GetRequiredService<OdysseyDbContext>());
 builder.Services.AddScoped<IHostDb>(sp => sp.GetRequiredService<OdysseyDbContext>());
 builder.Services.AddScoped<IAddHostRequestDb>(sp => sp.GetRequiredService<OdysseyDbContext>());
-builder.Services.AddScoped<IApprovedAddHostRequestDb>(sp => sp.GetRequiredService<OdysseyDbContext>());
 builder.Services.AddScoped<IReservationDb>(sp => sp.GetRequiredService<OdysseyDbContext>());
 builder.Services.AddScoped<ICustomerReviewDb>(sp => sp.GetRequiredService<OdysseyDbContext>());
 builder.Services.AddScoped<IHostReviewDb>(sp => sp.GetRequiredService<OdysseyDbContext>());

@@ -12,5 +12,7 @@ public class AddHostRequest
 
     public string Description { get; set; }
 
-    public AddRequestState Situation { get; set; }
+    public AddRequestState Situation { get; set; } = AddRequestState.WAITING;
+
+    public ICollection<HostImages> HostImages { get; set; } = new List<HostImages>();
 }

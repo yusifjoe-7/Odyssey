@@ -21,7 +21,6 @@ public class OdysseyDbContext : DbContext,
     IMessageDb,
     IHostDb,
     IAddHostRequestDb,
-    IApprovedAddHostRequestDb,
     IReservationDb,
     ICustomerReviewDb,
     IHostReviewDb,
@@ -42,7 +41,6 @@ public class OdysseyDbContext : DbContext,
     public DbSet<Host> Hosts => Set<Host>();
     public DbSet<HostImages> HostImages => Set<HostImages>();
     public DbSet<AddHostRequest> AddHostRequests => Set<AddHostRequest>();
-    public DbSet<ApprovedAddHostRequest> ApprovedAddHostRequests => Set<ApprovedAddHostRequest>();
 
     public DbSet<Reservation> Reservations => Set<Reservation>();
 

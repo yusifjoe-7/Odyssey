@@ -102,29 +102,6 @@ namespace Odyssey.Infrastructure.Common.Persistence.Migrations
                     b.ToTable("AddHostRequests", (string)null);
                 });
 
-            modelBuilder.Entity("Odyssey.Domain.Hosts.ApprovedAddHostRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ApprovedAdminId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("HostId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApprovedAdminId");
-
-                    b.HasIndex("HostId");
-
-                    b.ToTable("ApprovedAddHostRequests", (string)null);
-                });
-
             modelBuilder.Entity("Odyssey.Domain.Hosts.Host", b =>
                 {
                     b.Property<int>("Id")
@@ -172,6 +149,9 @@ namespace Odyssey.Infrastructure.Common.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AddHostRequestId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("HostId")
                         .HasColumnType("integer");
 
@@ -180,6 +160,8 @@ namespace Odyssey.Infrastructure.Common.Persistence.Migrations
                         .HasColumnType("character varying(1000)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddHostRequestId");
 
                     b.HasIndex("HostId");
 
@@ -614,25 +596,6 @@ namespace Odyssey.Infrastructure.Common.Persistence.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("Odyssey.Domain.Hosts.ApprovedAddHostRequest", b =>
-                {
-                    b.HasOne("Odyssey.Domain.Users.Admins.Admin", "ApprovedAdmin")
-                        .WithMany()
-                        .HasForeignKey("ApprovedAdminId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Odyssey.Domain.Hosts.Host", "host")
-                        .WithMany()
-                        .HasForeignKey("HostId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("ApprovedAdmin");
-
-                    b.Navigation("host");
-                });
-
             modelBuilder.Entity("Odyssey.Domain.Hosts.Host", b =>
                 {
                     b.HasOne("Odyssey.Domain.Users.Owners.Owner", "Owner")
@@ -647,6 +610,11 @@ namespace Odyssey.Infrastructure.Common.Persistence.Migrations
 
             modelBuilder.Entity("Odyssey.Domain.Hosts.HostImages", b =>
                 {
+                    b.HasOne("Odyssey.Domain.Hosts.AddHostRequest", null)
+                        .WithMany("HostImages")
+                        .HasForeignKey("AddHostRequestId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Odyssey.Domain.Hosts.Host", "Host")
                         .WithMany("HostImages")
                         .HasForeignKey("HostId")
@@ -729,6 +697,11 @@ namespace Odyssey.Infrastructure.Common.Persistence.Migrations
                     b.HasOne("Odyssey.Domain.Users.Owners.Owner", null)
                         .WithMany("OpendIssues")
                         .HasForeignKey("OwnerId");
+                });
+
+            modelBuilder.Entity("Odyssey.Domain.Hosts.AddHostRequest", b =>
+                {
+                    b.Navigation("HostImages");
                 });
 
             modelBuilder.Entity("Odyssey.Domain.Hosts.Host", b =>

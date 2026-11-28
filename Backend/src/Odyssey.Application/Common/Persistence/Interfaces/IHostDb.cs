@@ -5,6 +5,6 @@ namespace Odyssey.Application.Common.Persistence.Interfaces;
 
 public interface IHostDb
 {
-    DbSet<Host> Hosts { get; }
+    DbSet<Odyssey.Domain.Hosts.Host> Hosts { get; }
     Task<int> SaveChangesAsync(CancellationToken ct = default);
 }
