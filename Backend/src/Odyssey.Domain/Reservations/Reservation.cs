@@ -1,3 +1,4 @@
+using System;
 using Odyssey.Domain.Users.Customers;
 using Odyssey.Domain.Users.Owners;
 using Odyssey.Domain.Hosts;
@@ -15,7 +16,7 @@ public class Reservation
     public string CustomerUserName { get; set; }
     public Customer customer { get; set; }
     
-    public int HostId { get; set; }
+    public Guid HostId { get; set; }
     public Host host { get; set; }
 
     public decimal TotalPrice { get; set; }

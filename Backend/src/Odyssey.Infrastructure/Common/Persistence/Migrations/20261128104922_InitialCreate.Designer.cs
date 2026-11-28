@@ -9,10 +9,10 @@ using Odyssey.Infrastructure.Common.Persistence;
 
 #nullable disable
 
-namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.Migrations
+namespace Odyssey.Infrastructure.Common.Persistence.Migrations
 {
     [DbContext(typeof(OdysseyDbContext))]
-    [Migration("20261127051123_InitialCreate")]
+    [Migration("20261128104922_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,17 +27,15 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
 
             modelBuilder.Entity("Odyssey.Domain.ChatSystem.Conversation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("ReservationId")
                         .HasColumnType("uuid");
@@ -55,20 +53,18 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
 
             modelBuilder.Entity("Odyssey.Domain.ChatSystem.Message", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("ConversationId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("ConversationId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ReceiverId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("ReceiverId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SenderId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("SenderId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -79,11 +75,9 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
 
             modelBuilder.Entity("Odyssey.Domain.Hosts.AddHostRequest", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -105,38 +99,18 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                     b.ToTable("AddHostRequests", (string)null);
                 });
 
-            modelBuilder.Entity("Odyssey.Domain.Hosts.ApprovedAddHostRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ApprovedAdminId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("HostId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApprovedAdminId");
-
-                    b.HasIndex("HostId");
-
-                    b.ToTable("ApprovedAddHostRequests", (string)null);
-                });
-
             modelBuilder.Entity("Odyssey.Domain.Hosts.Host", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("MainImageKey")
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
@@ -146,11 +120,45 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
+                    b.Property<decimal>("PricePerNight")
+                        .HasColumnType("numeric")
+                        .HasColumnName("decimal(8, 1)");
+
+                    b.Property<int>("PropertyArea")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OwnerUserName");
 
+                    b.HasIndex("PricePerNight");
+
                     b.ToTable("Hosts", (string)null);
+                });
+
+            modelBuilder.Entity("Odyssey.Domain.Hosts.HostImages", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("AddHostRequestId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("HostId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ImageKey")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddHostRequestId");
+
+                    b.HasIndex("HostId");
+
+                    b.ToTable("HostImages", (string)null);
                 });
 
             modelBuilder.Entity("Odyssey.Domain.Reservations.Reservation", b =>
@@ -166,8 +174,8 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                     b.Property<DateOnly>("From")
                         .HasColumnType("date");
 
-                    b.Property<int>("HostId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("HostId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("OwnerUserName")
                         .IsRequired()
@@ -176,6 +184,10 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
 
                     b.Property<DateOnly>("To")
                         .HasColumnType("date");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("numeric")
+                        .HasColumnName("decimal(10, 1)");
 
                     b.HasKey("Id");
 
@@ -190,11 +202,9 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
 
             modelBuilder.Entity("Odyssey.Domain.Reviews.Customers.CustomerReview", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -223,11 +233,9 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
 
             modelBuilder.Entity("Odyssey.Domain.Reviews.Hosts.HostReview", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -237,8 +245,8 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                     b.Property<byte>("Rate")
                         .HasColumnType("smallint");
 
-                    b.Property<int>("ToId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ToId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -254,11 +262,9 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
 
             modelBuilder.Entity("Odyssey.Domain.Reviews.Owners.OwnerReview", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -287,11 +293,9 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
 
             modelBuilder.Entity("Odyssey.Domain.Support.Issue", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("AssignedAdminUserName")
                         .HasMaxLength(200)
@@ -302,11 +306,11 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("integer");
+                    b.Property<Guid?>("CustomerId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int?>("OwnerId")
-                        .HasColumnType("integer");
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("issueStatus")
                         .HasColumnType("integer");
@@ -322,11 +326,9 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
 
             modelBuilder.Entity("Odyssey.Domain.Users.Admins.Admin", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -346,7 +348,11 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<int>("Role")
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("role")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -356,50 +362,12 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
 
             modelBuilder.Entity("Odyssey.Domain.Users.Admins.CreateAdminRequest", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Situation")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CreateAdminRequests", (string)null);
-                });
-
-            modelBuilder.Entity("Odyssey.Domain.Users.Admins.CreateAdminRequestApproved", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AdminId")
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ApprovedWithCode")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdminId");
-
-                    b.ToTable("CreateAdminRequestsApproved", (string)null);
-                });
-
-            modelBuilder.Entity("Odyssey.Domain.Users.Customers.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -419,13 +387,56 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<int>("Role")
+                    b.Property<int>("Situation")
                         .HasColumnType("integer");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("role")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CreateAdminRequests", (string)null);
+                });
+
+            modelBuilder.Entity("Odyssey.Domain.Users.Customers.Customer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<string>("HashedPassword")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("ImageKey")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
+
+                    b.Property<int>("role")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -437,11 +448,9 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
 
             modelBuilder.Entity("Odyssey.Domain.Users.Owners.Owner", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -456,18 +465,22 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
 
+                    b.Property<string>("ImageKey")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
-
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
+
+                    b.Property<int>("role")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -479,11 +492,9 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
 
             modelBuilder.Entity("Odyssey.Domain.Users.RefreshToken", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -499,8 +510,8 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -560,25 +571,6 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("Odyssey.Domain.Hosts.ApprovedAddHostRequest", b =>
-                {
-                    b.HasOne("Odyssey.Domain.Users.Admins.Admin", "ApprovedAdmin")
-                        .WithMany()
-                        .HasForeignKey("ApprovedAdminId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Odyssey.Domain.Hosts.Host", "host")
-                        .WithMany()
-                        .HasForeignKey("HostId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("ApprovedAdmin");
-
-                    b.Navigation("host");
-                });
-
             modelBuilder.Entity("Odyssey.Domain.Hosts.Host", b =>
                 {
                     b.HasOne("Odyssey.Domain.Users.Owners.Owner", "Owner")
@@ -589,6 +581,22 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                         .IsRequired();
 
                     b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("Odyssey.Domain.Hosts.HostImages", b =>
+                {
+                    b.HasOne("Odyssey.Domain.Hosts.AddHostRequest", null)
+                        .WithMany("HostImages")
+                        .HasForeignKey("AddHostRequestId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Odyssey.Domain.Hosts.Host", "Host")
+                        .WithMany("HostImages")
+                        .HasForeignKey("HostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Host");
                 });
 
             modelBuilder.Entity("Odyssey.Domain.Reservations.Reservation", b =>
@@ -666,15 +674,14 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                         .HasForeignKey("OwnerId");
                 });
 
-            modelBuilder.Entity("Odyssey.Domain.Users.Admins.CreateAdminRequestApproved", b =>
+            modelBuilder.Entity("Odyssey.Domain.Hosts.AddHostRequest", b =>
                 {
-                    b.HasOne("Odyssey.Domain.Users.Admins.Admin", "admin")
-                        .WithMany()
-                        .HasForeignKey("AdminId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Navigation("HostImages");
+                });
 
-                    b.Navigation("admin");
+            modelBuilder.Entity("Odyssey.Domain.Hosts.Host", b =>
+                {
+                    b.Navigation("HostImages");
                 });
 
             modelBuilder.Entity("Odyssey.Domain.Users.Customers.Customer", b =>

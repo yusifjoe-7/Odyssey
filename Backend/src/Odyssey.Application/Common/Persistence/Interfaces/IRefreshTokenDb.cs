@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using Odyssey.Domain.Users;
 
@@ -9,5 +10,5 @@ public interface IRefreshTokenDb
 
     Task<int> SaveChangesAsync(CancellationToken ct = default);
 
-    Task<User?> FindUserAsync(int userId, CancellationToken cancellationToken = default);
+    Task<User?> FindUserAsync(Guid userId, CancellationToken cancellationToken = default);
 }

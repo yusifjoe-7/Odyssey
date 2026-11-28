@@ -1,3 +1,4 @@
+using System;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
@@ -11,4 +12,4 @@ public record RegisteringCommand(
             string Password,
             string Role,
             IFormFile? Image = null
-            ) : IRequest<int>;
+            ) : IRequest<Guid>;

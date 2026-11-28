@@ -1,10 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.Migrations
+namespace Odyssey.Infrastructure.Common.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -16,12 +15,12 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                 name: "Admins",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    UserName = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
                     HashedPassword = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
-                    Role = table.Column<int>(type: "integer", nullable: false),
+                    role = table.Column<int>(type: "integer", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
@@ -33,9 +32,15 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                 name: "CreateAdminRequests",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Situation = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Situation = table.Column<int>(type: "integer", nullable: false),
+                    ApprovedWithCode = table.Column<string>(type: "text", nullable: true),
+                    Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    UserName = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
+                    HashedPassword = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
+                    role = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,14 +51,14 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                 name: "Customers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    UserName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     Email = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
                     HashedPassword = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
-                    Role = table.Column<int>(type: "integer", nullable: false),
+                    role = table.Column<int>(type: "integer", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UserName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
+                    ImageKey = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,14 +70,14 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                 name: "Owners",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    UserName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     Email = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
                     HashedPassword = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
-                    Role = table.Column<int>(type: "integer", nullable: false),
+                    role = table.Column<int>(type: "integer", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UserName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
+                    ImageKey = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -84,10 +89,9 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                 name: "RefreshTokens",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Token = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     ExpiresAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     RevokedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
@@ -98,31 +102,10 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                 });
 
             migrationBuilder.CreateTable(
-                name: "CreateAdminRequestsApproved",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    AdminId = table.Column<int>(type: "integer", nullable: false),
-                    ApprovedWithCode = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CreateAdminRequestsApproved", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CreateAdminRequestsApproved_Admins_AdminId",
-                        column: x => x.AdminId,
-                        principalTable: "Admins",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CustomerReviews",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ToCustomerUserName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     UserName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     Rate = table.Column<byte>(type: "smallint", nullable: false),
@@ -143,8 +126,7 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                 name: "AddHostRequests",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     OwnerUserName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     Description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
                     Situation = table.Column<int>(type: "integer", nullable: false)
@@ -164,10 +146,12 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                 name: "Hosts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     OwnerUserName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    Description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false)
+                    Description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
+                    decimal81 = table.Column<decimal>(name: "decimal(8, 1)", type: "numeric", nullable: false),
+                    PropertyArea = table.Column<int>(type: "integer", nullable: false),
+                    MainImageKey = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -184,13 +168,12 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                 name: "Issues",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ClientUserName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     AssignedAdminUserName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
                     issueStatus = table.Column<int>(type: "integer", nullable: false),
-                    CustomerId = table.Column<int>(type: "integer", nullable: true),
-                    OwnerId = table.Column<int>(type: "integer", nullable: true)
+                    CustomerId = table.Column<Guid>(type: "uuid", nullable: true),
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -211,8 +194,7 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                 name: "OwnerReviews",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ToOwnerUserName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     UserName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     Rate = table.Column<byte>(type: "smallint", nullable: false),
@@ -230,38 +212,37 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                 });
 
             migrationBuilder.CreateTable(
-                name: "ApprovedAddHostRequests",
+                name: "HostImages",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    HostId = table.Column<int>(type: "integer", nullable: false),
-                    ApprovedAdminId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ImageKey = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
+                    HostId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AddHostRequestId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ApprovedAddHostRequests", x => x.Id);
+                    table.PrimaryKey("PK_HostImages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ApprovedAddHostRequests_Admins_ApprovedAdminId",
-                        column: x => x.ApprovedAdminId,
-                        principalTable: "Admins",
+                        name: "FK_HostImages_AddHostRequests_AddHostRequestId",
+                        column: x => x.AddHostRequestId,
+                        principalTable: "AddHostRequests",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ApprovedAddHostRequests_Hosts_HostId",
+                        name: "FK_HostImages_Hosts_HostId",
                         column: x => x.HostId,
                         principalTable: "Hosts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "HostReviews",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ToId = table.Column<int>(type: "integer", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ToId = table.Column<Guid>(type: "uuid", nullable: false),
                     UserName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     Rate = table.Column<byte>(type: "smallint", nullable: false),
                     Description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false)
@@ -284,7 +265,8 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     OwnerUserName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     CustomerUserName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    HostId = table.Column<int>(type: "integer", nullable: false),
+                    HostId = table.Column<Guid>(type: "uuid", nullable: false),
+                    decimal101 = table.Column<decimal>(name: "decimal(10, 1)", type: "numeric", nullable: false),
                     From = table.Column<DateOnly>(type: "date", nullable: false),
                     To = table.Column<DateOnly>(type: "date", nullable: false)
                 },
@@ -315,10 +297,9 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                 name: "Conversations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    CustomerId = table.Column<int>(type: "integer", nullable: false),
-                    OwnerId = table.Column<int>(type: "integer", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: false),
                     ReservationId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -348,11 +329,10 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                 name: "Messages",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ConversationId = table.Column<int>(type: "integer", nullable: false),
-                    SenderId = table.Column<int>(type: "integer", nullable: false),
-                    ReceiverId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ConversationId = table.Column<Guid>(type: "uuid", nullable: false),
+                    SenderId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ReceiverId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -371,16 +351,6 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                 column: "OwnerUserName");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ApprovedAddHostRequests_ApprovedAdminId",
-                table: "ApprovedAddHostRequests",
-                column: "ApprovedAdminId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ApprovedAddHostRequests_HostId",
-                table: "ApprovedAddHostRequests",
-                column: "HostId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Conversations_CustomerId",
                 table: "Conversations",
                 column: "CustomerId");
@@ -396,11 +366,6 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                 column: "ReservationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CreateAdminRequestsApproved_AdminId",
-                table: "CreateAdminRequestsApproved",
-                column: "AdminId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_CustomerReviews_ToCustomerUserName",
                 table: "CustomerReviews",
                 column: "ToCustomerUserName");
@@ -412,9 +377,24 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_HostImages_AddHostRequestId",
+                table: "HostImages",
+                column: "AddHostRequestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HostImages_HostId",
+                table: "HostImages",
+                column: "HostId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_HostReviews_ToId",
                 table: "HostReviews",
                 column: "ToId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Hosts_decimal(8, 1)",
+                table: "Hosts",
+                column: "decimal(8, 1)");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Hosts_OwnerUserName",
@@ -473,19 +453,16 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AddHostRequests");
-
-            migrationBuilder.DropTable(
-                name: "ApprovedAddHostRequests");
+                name: "Admins");
 
             migrationBuilder.DropTable(
                 name: "CreateAdminRequests");
 
             migrationBuilder.DropTable(
-                name: "CreateAdminRequestsApproved");
+                name: "CustomerReviews");
 
             migrationBuilder.DropTable(
-                name: "CustomerReviews");
+                name: "HostImages");
 
             migrationBuilder.DropTable(
                 name: "HostReviews");
@@ -503,7 +480,7 @@ namespace Odyssey.Infrastructure.src.Odyssey.Infrastructure.Common.Persistence.M
                 name: "RefreshTokens");
 
             migrationBuilder.DropTable(
-                name: "Admins");
+                name: "AddHostRequests");
 
             migrationBuilder.DropTable(
                 name: "Conversations");

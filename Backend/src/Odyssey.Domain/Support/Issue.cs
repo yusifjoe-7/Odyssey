@@ -1,3 +1,4 @@
+using System;
 using Odyssey.Domain.Users;
 using Odyssey.Domain.Users.Admins;
 
@@ -5,7 +6,7 @@ namespace Odyssey.Domain.Support;
 
 public class Issue
 {
-    public int Id { get; set;}
+    public Guid Id { get; set;}
 
     public string ClientUserName { get; set; }
     public Client clinet { get; set; }

@@ -1,3 +1,4 @@
+using System;
 using Odyssey.Application.Common.Persistence.Interfaces;
 using Odyssey.Application.Users.Registering;
 using Odyssey.Domain.Users;
@@ -8,7 +9,7 @@ namespace Odyssey.Application.Users.Admins.Registering;
 
 public class AdminDbRegisteringCommit(ICreateAdminRequestDb context, CheckNameAndEmailAdmin Checker1, CheckNameAndEmailAdminRequested Checker2) : IDbRegisteringCommit
 {
-    public async Task<int> Commit(User user, CancellationToken cancellationToken)
+    public async Task<Guid> Commit(User user, CancellationToken cancellationToken)
     {
         await Checker1.Check(user);
         await Checker2.Check(user);

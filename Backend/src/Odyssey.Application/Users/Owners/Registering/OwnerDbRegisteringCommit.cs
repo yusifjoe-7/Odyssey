@@ -1,3 +1,4 @@
+using System;
 using Odyssey.Application.Common.Persistence.Interfaces;
 using Odyssey.Application.Users.Registering;
 using Odyssey.Domain.Users;
@@ -7,7 +8,7 @@ namespace Odyssey.Application.Users.Owners.Registering;
 
 public class OwnerDbRegisteringCommit(IOwnerDb context, CheckNameAndEmailOwner Checker) : IDbRegisteringCommit
 {
-    public async Task<int> Commit(User user, CancellationToken cancellationToken)
+    public async Task<Guid> Commit(User user, CancellationToken cancellationToken)
     {
         await Checker.Check(user);
 

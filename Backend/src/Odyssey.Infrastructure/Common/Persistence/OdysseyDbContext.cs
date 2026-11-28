@@ -1,3 +1,4 @@
+using System;
 
 using Microsoft.EntityFrameworkCore;
 using Odyssey.Application.Common.Persistence.Interfaces;
@@ -69,7 +70,7 @@ public class OdysseyDbContext : DbContext,
         return await Owners.FirstOrDefaultAsync(u => u.UserName == userName, cancellationToken);
     }
 
-    public async Task<User?> FindUserAsync(int userId, CancellationToken cancellationToken = default)
+    public async Task<User?> FindUserAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         // User hierarchy uses TPC; no single Users table, so search each concrete table.
         User? user = await Admins.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);

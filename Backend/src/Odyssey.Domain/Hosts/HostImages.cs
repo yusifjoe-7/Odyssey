@@ -1,11 +1,12 @@
+using System;
 namespace Odyssey.Domain.Hosts;
 
 public class HostImages
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public string? ImageKey { get; set; }
 
-    public int HostId { get; set; }
+    public Guid HostId { get; set; }
     public Host Host { get; set; }
 }

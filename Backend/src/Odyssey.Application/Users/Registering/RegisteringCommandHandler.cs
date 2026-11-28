@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using MediatR;
 using Odyssey.Application.Common.Storage;
@@ -13,7 +14,7 @@ using Odyssey.Application.Users.Customers.Registering;
 
 namespace Odyssey.Application.Users.Registering;
 
-public class RegisteringCommandHandler : IRequestHandler<RegisteringCommand, int>
+public class RegisteringCommandHandler : IRequestHandler<RegisteringCommand, Guid>
 {
 
 
@@ -35,7 +36,7 @@ public class RegisteringCommandHandler : IRequestHandler<RegisteringCommand, int
     }
 
 
-    public async Task<int> Handle(RegisteringCommand registeringCommand, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(RegisteringCommand registeringCommand, CancellationToken cancellationToken)
     {
         var hashed = PasswordHasher.Hash(registeringCommand.Password);
 

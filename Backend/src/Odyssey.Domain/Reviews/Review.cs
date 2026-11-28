@@ -1,10 +1,11 @@
+using System;
 using Odyssey.Domain.Users;
 
 namespace Odyssey.Domain.Reviews;
 
 public class Review
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public string UserName { get; set; }
 

@@ -1,3 +1,4 @@
+using System;
 using Odyssey.Domain.Users.Owners;
 using Odyssey.Domain.Common;
 
@@ -5,7 +6,7 @@ namespace Odyssey.Domain.Hosts;
 
 public class AddHostRequest
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     
     public string OwnerUserName { get; set; }
     public Owner Owner { get; set; }
