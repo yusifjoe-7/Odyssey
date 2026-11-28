@@ -1,3 +1,3 @@
-namespace Odyssey.Application.Users.Login;
+namespace Odyssey.Application.DOTs.Auth;
 
 public record LoginResult(string AccessToken, string RefreshToken);

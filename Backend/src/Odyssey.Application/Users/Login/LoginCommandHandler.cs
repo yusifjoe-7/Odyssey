@@ -1,6 +1,7 @@
 using MediatR;
 using Odyssey.Application.Common.Auth;
 using Odyssey.Application.Common.Persistence.Interfaces;
+using Odyssey.Application.DOTs.Auth;
 using Odyssey.Domain.Common.Security;
 using Odyssey.Domain.Users;
 

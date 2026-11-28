@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Odyssey.Application.Common.Auth;
 using Odyssey.Application.Common.Persistence.Interfaces;
+using Odyssey.Application.DOTs.Auth;
 using Odyssey.Domain.Exceptions;
 using Odyssey.Domain.Users;
 
