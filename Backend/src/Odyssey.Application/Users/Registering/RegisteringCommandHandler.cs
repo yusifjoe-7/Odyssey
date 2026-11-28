@@ -5,9 +5,6 @@ using Odyssey.Application.Common.Storage;
 using Odyssey.Application.Exceptons;
 using Odyssey.Domain.Common.Security;
 using Odyssey.Domain.Users;
-using Odyssey.Domain.Users.Admins;
-using Odyssey.Domain.Users.Customers;
-using Odyssey.Domain.Users.Owners;
 using Odyssey.Application.Users.Admins.Registering;
 using Odyssey.Application.Users.Owners.Registering;
 using Odyssey.Application.Users.Customers.Registering;
@@ -32,6 +29,7 @@ public class RegisteringCommandHandler : IRequestHandler<RegisteringCommand, Gui
         _customerCommit = customerCommit;
         _ownerCommit = ownerCommit;
         _adminCommit = adminCommit;
+
         _uploadFileStorage = uploadFileStorage;
     }
 
@@ -40,31 +38,14 @@ public class RegisteringCommandHandler : IRequestHandler<RegisteringCommand, Gui
     {
         var hashed = PasswordHasher.Hash(registeringCommand.Password);
 
-        User user = registeringCommand.Role switch
-        {
-            "Customer" => new Customer
+        User user = new User
             {
                 Name = $"{registeringCommand.FristName} {registeringCommand.SecondName}",
                 UserName = registeringCommand.UserName,
                 Email = registeringCommand.Email,
                 HashedPassword = hashed,
-            },
-            "Owner" => new Owner
-            {
-                Name = $"{registeringCommand.FristName} {registeringCommand.SecondName}",
-                UserName = registeringCommand.UserName,
-                Email = registeringCommand.Email,
-                HashedPassword = hashed,
-            },
-            "Admin" => new CreateAdminRequest
-            {
-                Name = $"{registeringCommand.FristName} {registeringCommand.SecondName}",
-                UserName = registeringCommand.UserName,
-                Email = registeringCommand.Email,
-                HashedPassword = hashed,
-            },
-            _ => throw new UnkownRoleException($"What Is {registeringCommand.Role}")
-        };
+            };
+
 
         IDbRegisteringCommit Commiter = registeringCommand.Role switch
         {

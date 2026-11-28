@@ -16,20 +16,15 @@ public class HostsGlobalQueryHandler : IRequestHandler<HostsQlobalQuery, HostGlo
 
     public async Task<HostGlobalQueryResponse> Handle(HostsQlobalQuery request, CancellationToken cancellationToken)
     {
-        var hostsQuery = _db.Hosts
+        bool IsNotNew = !(request.LastElement is null);
+        
+        var hosts = await _db.Hosts
             .AsNoTracking()
-            .Include(h => h.HostImages)
             .OrderBy(h => h.Id)
-            .AsQueryable();
+            .Where(h => IsNotNew ? h.Id > request.LastElement : true)
+            .Take(request.NumberOfPages)
+            .ToListAsync(cancellationToken);
 
-        // If a LastElement is provided, start from it.
-        if (request.LastElement is not null)
-        {
-            var lastElement = request.LastElement.Value;
-            hostsQuery = hostsQuery.Where(h => h.Id.CompareTo(lastElement) > 0);
-        }
-
-        var hosts = await hostsQuery.ToListAsync(cancellationToken);
 
         return new HostGlobalQueryResponse
         {
